@@ -1256,11 +1256,11 @@ namespace Nop.Services.ExportImport
                             case "MinStockQuantity":
                                 product.MinStockQuantity = property.IntValue;
                                 break;
+                            case "EmailAdminWhenMinStockQuantity":
+                                product.EmailAdminWhenMinStockQuantity = property.BooleanValue;
+                                break;
                             case "LowStockActivity":
                                 product.LowStockActivityId = property.IntValue;
-                                break;
-                            case "NotifyAdminForQuantityBelow":
-                                product.NotifyAdminForQuantityBelow = property.IntValue;
                                 break;
                             case "BackorderMode":
                                 product.BackorderModeId = property.IntValue;

@@ -1184,9 +1184,10 @@ namespace Nop.Services.Catalog
             var combinations = products.SelectMany(product => product.ProductAttributeCombinations);
 
             //filter by combinations with stock quantity less than the minimum
-            combinations = combinations.Where(combination => combination.StockQuantity <= 0);
+            combinations = combinations.Where(combination => combination.StockQuantity <= combination.MinStockQuantity);
 
-            combinations = combinations.OrderBy(combination => combination.ProductId).ThenBy(combination => combination.Id);
+            combinations = combinations.OrderBy(combination => combination.ProductId)
+                .ThenBy(combination => combination.MinStockQuantity).ThenBy(combination => combination.Id);
 
             return new PagedList<ProductAttributeCombination>(combinations, pageIndex, pageSize, getOnlyTotalCount);
         }
@@ -1316,7 +1317,7 @@ namespace Nop.Services.Catalog
                 }
 
                 //qty is reduced. check if minimum stock quantity is reached
-                if (quantityToChange < 0 && product.MinStockQuantity >= product.GetTotalStockQuantity())
+                if (quantityToChange < 0 && product.GetTotalStockQuantity() <= product.MinStockQuantity)
                 {
                     //what should we do now? disable buy button, unpublish the product, or do nothing? check "Low stock activity" property
                     switch (product.LowStockActivity)
@@ -1333,6 +1334,10 @@ namespace Nop.Services.Catalog
                         default:
                             break;
                     }
+
+                    //send email notification
+                    if (product.EmailAdminWhenMinStockQuantity)
+                        _workflowMessageService.SendQuantityBelowStoreOwnerNotification(product, _localizationSettings.DefaultAdminLanguageId);
                 }
                 //qty is increased. product is back in stock (minimum stock quantity is reached again)?
                 if (_catalogSettings.PublishBackProductWhenCancellingOrders)
@@ -1355,12 +1360,6 @@ namespace Nop.Services.Catalog
                         }
                     }
                 }
-
-                //send email notification
-                if (quantityToChange < 0 && product.GetTotalStockQuantity() < product.NotifyAdminForQuantityBelow)
-                {
-                    _workflowMessageService.SendQuantityBelowStoreOwnerNotification(product, _localizationSettings.DefaultAdminLanguageId);
-                }
             }
 
             if (product.ManageInventoryMethod == ManageInventoryMethod.ManageStockByAttributes)
@@ -1375,10 +1374,8 @@ namespace Nop.Services.Catalog
                     AddStockQuantityHistoryEntry(product, quantityToChange, combination.StockQuantity, message: message, combinationId: combination.Id);
 
                     //send email notification
-                    if (quantityToChange < 0 && combination.StockQuantity < combination.NotifyAdminForQuantityBelow)
-                    {
+                    if (quantityToChange < 0 && combination.StockQuantity <= combination.MinStockQuantity && combination.EmailAdminWhenMinStockQuantity)
                         _workflowMessageService.SendQuantityBelowStoreOwnerNotification(combination, _localizationSettings.DefaultAdminLanguageId);
-                    }
                 }
             }
 

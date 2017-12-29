@@ -74,6 +74,42 @@ set @resources='
   <LocaleResource Name="Enums.Nop.Core.Domain.Customers.UserRegistrationType.Standard">
     <Value>Standard account creation</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.EmailAdminWhenMinStockQuantity.Hint">
+    <Value>When the current stock quantity falls below minimum stock quantity, a store owner will receive a notification.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.NotifyAdminForQuantityBelow">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.NotifyAdminForQuantityBelow.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity.Hint">
+    <Value>When the current stock quantity falls below minimum stock quantity, a store owner will receive a notification.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity">
+    <Value>Minimum stock qty</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity.Hint">
+    <Value>If you have enabled ''Manage stock by product attributes'' you can receive an email notification when the current stock quantity falls below (reaches) your minimum stock quantity.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.NotifyAdminForQuantityBelow">
+    <Value></Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -177,4 +213,117 @@ BEGIN
 	ALTER TABLE [ActivityLog]
 	ADD [EntityName] NVARCHAR(400) NULL
 END
+GO
+
+--new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[ProductAttributeCombination]') AND NAME = 'MinStockQuantity')
+BEGIN
+	ALTER TABLE [ProductAttributeCombination]
+	ADD [MinStockQuantity] INT NULL
+END
+GO
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[ProductAttributeCombination]') and NAME = 'NotifyAdminForQuantityBelow')
+BEGIN
+    EXEC('
+        UPDATE [ProductAttributeCombination]
+        SET [MinStockQuantity] = [NotifyAdminForQuantityBelow]
+        WHERE [MinStockQuantity] IS NULL')
+END
+ELSE
+BEGIN
+	UPDATE [ProductAttributeCombination]
+	SET [MinStockQuantity] = 0
+	WHERE [MinStockQuantity] IS NULL
+END
+GO
+
+ALTER TABLE [ProductAttributeCombination] ALTER COLUMN [MinStockQuantity] INT NOT NULL
+GO
+
+--new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[ProductAttributeCombination]') AND NAME = 'EmailAdminWhenMinStockQuantity')
+BEGIN
+	ALTER TABLE [ProductAttributeCombination]
+	ADD [EmailAdminWhenMinStockQuantity] BIT NULL
+END
+GO
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[ProductAttributeCombination]') and NAME = 'NotifyAdminForQuantityBelow')
+BEGIN
+    EXEC('
+        UPDATE [ProductAttributeCombination]
+        SET [EmailAdminWhenMinStockQuantity] = 
+			CASE
+				WHEN [NotifyAdminForQuantityBelow] > 0 THEN 1 
+				ELSE 0 
+			END
+        WHERE [EmailAdminWhenMinStockQuantity] IS NULL')
+END
+ELSE
+BEGIN
+	UPDATE [ProductAttributeCombination]
+	SET [EmailAdminWhenMinStockQuantity] = 0
+	WHERE [EmailAdminWhenMinStockQuantity] IS NULL
+END
+GO
+
+ALTER TABLE [ProductAttributeCombination] ALTER COLUMN [EmailAdminWhenMinStockQuantity] BIT NOT NULL
+GO
+
+--drop column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[ProductAttributeCombination]') AND NAME = 'NotifyAdminForQuantityBelow')
+BEGIN
+	ALTER TABLE [ProductAttributeCombination] DROP COLUMN [NotifyAdminForQuantityBelow]
+END
+GO
+
+--new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[Product]') AND NAME = 'EmailAdminWhenMinStockQuantity')
+BEGIN
+	ALTER TABLE [Product]
+	ADD [EmailAdminWhenMinStockQuantity] BIT NULL
+END
+GO
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[Product]') and NAME = 'NotifyAdminForQuantityBelow')
+BEGIN
+    EXEC('
+        UPDATE [Product]
+        SET [EmailAdminWhenMinStockQuantity] = 
+			CASE
+				WHEN [NotifyAdminForQuantityBelow] > 0 THEN 1 
+				ELSE 0 
+			END
+        WHERE [EmailAdminWhenMinStockQuantity] IS NULL')
+END
+ELSE
+BEGIN
+	UPDATE [Product]
+	SET [EmailAdminWhenMinStockQuantity] = 0
+	WHERE [EmailAdminWhenMinStockQuantity] IS NULL
+END
+GO
+
+ALTER TABLE [Product] ALTER COLUMN [EmailAdminWhenMinStockQuantity] BIT NOT NULL
+GO
+
+--drop column
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = object_id('[Product]') AND NAME = 'NotifyAdminForQuantityBelow')
+BEGIN
+	ALTER TABLE [Product] DROP COLUMN [NotifyAdminForQuantityBelow]
+END
+GO
+
+--new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'producteditorsettings.emailadminwhenminstockquantity')
+BEGIN
+	INSERT [Setting] ([Name], [Value], [StoreId])
+	VALUES (N'producteditorsettings.emailadminwhenminstockquantity', N'false', 0)
+END
+GO
+
+--delete setting
+DELETE FROM [Setting]
+WHERE [Name] = N'producteditorsettings.notifyadminforquantitybelow'
 GO

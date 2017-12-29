@@ -293,8 +293,8 @@
             $('#pnlDisplayStockAvailability').hide();
             $('#pnlDisplayStockQuantity').hide();
             $('#pnlMinStockQuantity').hide();
+            $('#pnlEmailAdminWhenMinStockQuantity').hide();
             $('#pnlLowStockActivity').hide();
-            $('#pnlNotifyForQuantityBelow').hide();
             $('#pnlAllowBackInStockSubscriptions').hide();
             $('#pnlBackorders').hide();
             $('#pnlAllowAddingOnlyExistingAttributeCombinations').hide();
@@ -321,8 +321,8 @@
             }
 
             $('#pnlMinStockQuantity').show();
+            $('#pnlEmailAdminWhenMinStockQuantity').show();
             $('#pnlLowStockActivity').show();
-            $('#pnlNotifyForQuantityBelow').show();
             $('#pnlBackorders').show();
 
             var selectedBackorderModeId = $("#@Html.IdFor(model => model.BackorderModeId)").val();
@@ -358,8 +358,8 @@
                 $('#pnlDisplayStockQuantity').hide();
             }
             $('#pnlMinStockQuantity').hide();
+            $('#pnlEmailAdminWhenMinStockQuantity').hide();
             $('#pnlLowStockActivity').hide();
-            $('#pnlNotifyForQuantityBelow').hide();
             $('#pnlAllowBackInStockSubscriptions').hide();
             $('#pnlBackorders').hide();
             $('#pnlAllowAddingOnlyExistingAttributeCombinations').show();
@@ -1601,6 +1601,15 @@
 							<span asp-validation-for="MinStockQuantity"></span>
                         </div>
                     </div>
+                    <div class="form-group @(Model.ProductEditorSettingsModel.EmailAdminWhenMinStockQuantity ? null : "advanced-setting")" id="pnlEmailAdminWhenMinStockQuantity">
+                        <div class="@leftColumnClass">
+							<nop-label asp-for="EmailAdminWhenMinStockQuantity" />
+                        </div>
+                        <div class="@rightColumnClass">
+							<nop-editor asp-for="EmailAdminWhenMinStockQuantity" />
+							<span asp-validation-for="EmailAdminWhenMinStockQuantity"></span>
+                        </div>
+                    </div>
                     <div class="form-group @(Model.ProductEditorSettingsModel.LowStockActivity ? null : "advanced-setting")" id="pnlLowStockActivity">
                         <div class="@leftColumnClass">
 							<nop-label asp-for="LowStockActivityId" />
@@ -1608,15 +1617,6 @@
                         <div class="@rightColumnClass">
 							<nop-select asp-for="LowStockActivityId" asp-items="@(((LowStockActivity)Model.LowStockActivityId).ToSelectList())" />
 							<span asp-validation-for="LowStockActivityId"></span>
-                        </div>
-                    </div>
-                    <div class="form-group @(Model.ProductEditorSettingsModel.NotifyAdminForQuantityBelow ? null : "advanced-setting")" id="pnlNotifyForQuantityBelow">
-                        <div class="@leftColumnClass">
-							<nop-label asp-for="NotifyAdminForQuantityBelow" />
-                        </div>
-                        <div class="@rightColumnClass">
-							<nop-editor asp-for="NotifyAdminForQuantityBelow" />
-							<span asp-validation-for="NotifyAdminForQuantityBelow"></span>
                         </div>
                     </div>
                     <div class="form-group @(Model.ProductEditorSettingsModel.Backorders ? null : "advanced-setting")" id="pnlBackorders">

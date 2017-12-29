@@ -246,11 +246,11 @@ namespace Nop.Web.Areas.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.MinStockQuantity")]
         public int MinStockQuantity { get; set; }
 
+        [NopResourceDisplayName("Admin.Catalog.Products.Fields.EmailAdminWhenMinStockQuantity")]
+        public bool EmailAdminWhenMinStockQuantity { get; set; }
+
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.LowStockActivity")]
         public int LowStockActivityId { get; set; }
-
-        [NopResourceDisplayName("Admin.Catalog.Products.Fields.NotifyAdminForQuantityBelow")]
-        public int NotifyAdminForQuantityBelow { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.BackorderMode")]
         public int BackorderModeId { get; set; }
@@ -916,8 +916,11 @@ namespace Nop.Web.Areas.Admin.Models.Catalog
             [UIHint("DecimalNullable")]
             public decimal? OverriddenPrice { get; set; }
 
-            [NopResourceDisplayName("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow")]
-            public int NotifyAdminForQuantityBelow { get; set; }
+            [NopResourceDisplayName("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity")]
+            public int MinStockQuantity { get; set; }
+
+            [NopResourceDisplayName("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity")]
+            public bool EmailAdminWhenMinStockQuantity { get; set; }
         }
 
         #region Stock quantity history

@@ -248,8 +248,8 @@ namespace Nop.Data.Tests
                 DisplayStockAvailability = true,
                 DisplayStockQuantity = true,
                 MinStockQuantity = 14,
+                EmailAdminWhenMinStockQuantity = true,
                 LowStockActivityId = 15,
-                NotifyAdminForQuantityBelow = 16,
                 BackorderModeId = 17,
                 AllowBackInStockSubscriptions = true,
                 OrderMinimumQuantity = 18,
@@ -315,7 +315,8 @@ namespace Nop.Data.Tests
                 ManufacturerPartNumber = "ManufacturerPartNumber1",
                 Gtin = "Gtin1",
                 OverriddenPrice = 0.01M,
-                NotifyAdminForQuantityBelow = 3,
+                MinStockQuantity = 1,
+                EmailAdminWhenMinStockQuantity = true,
                 Product = test.GetTestProduct()
             };
         }

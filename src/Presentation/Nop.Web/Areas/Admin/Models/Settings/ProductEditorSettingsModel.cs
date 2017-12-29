@@ -125,11 +125,11 @@ namespace Nop.Web.Areas.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.Settings.ProductEditor.MinimumStockQuantity")]
         public bool MinimumStockQuantity { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.Settings.ProductEditor.EmailAdminWhenMinStockQuantity")]
+        public bool EmailAdminWhenMinStockQuantity { get; set; }
+
         [NopResourceDisplayName("Admin.Configuration.Settings.ProductEditor.LowStockActivity")]
         public bool LowStockActivity { get; set; }
-
-        [NopResourceDisplayName("Admin.Configuration.Settings.ProductEditor.NotifyAdminForQuantityBelow")]
-        public bool NotifyAdminForQuantityBelow { get; set; }
 
         [NopResourceDisplayName("Admin.Configuration.Settings.ProductEditor.Backorders")]
         public bool Backorders { get; set; }

@@ -46,9 +46,14 @@ namespace Nop.Core.Domain.Catalog
         public decimal? OverriddenPrice { get; set; }
 
         /// <summary>
-        /// Gets or sets the quantity when admin should be notified
+        /// Gets or sets the minimum stock quantity
         /// </summary>
-        public int NotifyAdminForQuantityBelow { get; set; }
+        public int MinStockQuantity { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an email notification should be sent to a store owner if stock quantity less than minimum
+        /// </summary>
+        public bool EmailAdminWhenMinStockQuantity { get; set; }
 
         /// <summary>
         /// Gets the product

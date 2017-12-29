@@ -499,7 +499,6 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             model.ProductId = product.Id;
             model.StockQuantity = 10000;
-            model.NotifyAdminForQuantityBelow = 1;
 
             var attributes = _productAttributeService.GetProductAttributeMappingsByProductId(product.Id)
                 //ignore non-combinable attributes for combinations
@@ -770,7 +769,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 model.RecurringTotalCycles = 10;
                 model.RentalPriceLength = 1;
                 model.StockQuantity = 10000;
-                model.NotifyAdminForQuantityBelow = 1;
                 model.OrderMinimumQuantity = 1;
                 model.OrderMaximumQuantity = 10000;
                 model.TaxCategoryId = _taxSettings.DefaultTaxCategoryId;
@@ -4404,7 +4402,8 @@ namespace Nop.Web.Areas.Admin.Controllers
                         ManufacturerPartNumber = x.ManufacturerPartNumber,
                         Gtin = x.Gtin,
                         OverriddenPrice = x.OverriddenPrice,
-                        NotifyAdminForQuantityBelow = x.NotifyAdminForQuantityBelow
+                        MinStockQuantity = x.MinStockQuantity,
+                        EmailAdminWhenMinStockQuantity = x.EmailAdminWhenMinStockQuantity
                     };
                     //warnings
                     var warnings = _shoppingCartService.GetShoppingCartItemAttributeWarnings(_workContext.CurrentCustomer,
@@ -4455,7 +4454,8 @@ namespace Nop.Web.Areas.Admin.Controllers
             combination.ManufacturerPartNumber = model.ManufacturerPartNumber;
             combination.Gtin = model.Gtin;
             combination.OverriddenPrice = model.OverriddenPrice;
-            combination.NotifyAdminForQuantityBelow = model.NotifyAdminForQuantityBelow;
+            combination.MinStockQuantity = model.MinStockQuantity;
+            combination.EmailAdminWhenMinStockQuantity = model.EmailAdminWhenMinStockQuantity;
             _productAttributeService.UpdateProductAttributeCombination(combination);
 
             //quantity change history
@@ -4689,7 +4689,8 @@ namespace Nop.Web.Areas.Admin.Controllers
                     ManufacturerPartNumber = model.ManufacturerPartNumber,
                     Gtin = model.Gtin,
                     OverriddenPrice = model.OverriddenPrice,
-                    NotifyAdminForQuantityBelow = model.NotifyAdminForQuantityBelow,
+                    MinStockQuantity = model.MinStockQuantity,
+                    EmailAdminWhenMinStockQuantity = model.EmailAdminWhenMinStockQuantity,
                 };
                 _productAttributeService.InsertProductAttributeCombination(combination);
 
@@ -4748,7 +4749,8 @@ namespace Nop.Web.Areas.Admin.Controllers
                     ManufacturerPartNumber = null,
                     Gtin = null,
                     OverriddenPrice = null,
-                    NotifyAdminForQuantityBelow = 1
+                    MinStockQuantity = 0,
+                    EmailAdminWhenMinStockQuantity = false
                 };
                 _productAttributeService.InsertProductAttributeCombination(combination);
             }

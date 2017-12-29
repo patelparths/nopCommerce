@@ -2766,6 +2766,12 @@
   <LocaleResource Name="Admin.Catalog.Products.Fields.DownloadExpirationDays.Hint">
     <Value>The number of days during customers keeps access to the file (e.g. 14). Leave this field blank to allow continuous downloads.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Fields.EmailAdminWhenMinStockQuantity.Hint">
+    <Value>When the current stock quantity falls below minimum stock quantity, a store owner will receive a notification.</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.FullDescription">
     <Value>Full description</Value>
   </LocaleResource>
@@ -2972,12 +2978,6 @@
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.Name.Required">
     <Value>Please provide a name.</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.NotifyAdminForQuantityBelow">
-    <Value>Notify for qty below</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.Fields.NotifyAdminForQuantityBelow.Hint">
-    <Value>When the current stock quantity falls below (reaches) this quantity, a store owner will receive a notification.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.Fields.NotReturnable">
     <Value>Not returnable</Value>
@@ -3381,6 +3381,12 @@
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.Attributes">
     <Value>Attributes</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity.Hint">
+    <Value>When the current stock quantity falls below minimum stock quantity, a store owner will receive a notification.</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.GTIN">
     <Value>GTIN</Value>
   </LocaleResource>
@@ -3393,11 +3399,11 @@
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.ManufacturerPartNumber.Hint">
     <Value>The manufacturer's part number for this attribute combination.</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow">
-    <Value>Notify admin for quantity below</Value>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity">
+    <Value>Minimum stock qty</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow.Hint">
-    <Value>When the current stock quantity falls below (reaches) this quantity, a store owner will receive a notification.</Value>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity.Hint">
+    <Value>If you have enabled 'Manage stock by product attributes' you can receive an email notification when the current stock quantity falls below (reaches) your minimum stock quantity.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.OverriddenPrice">
     <Value>Overridden price</Value>
@@ -7290,6 +7296,9 @@
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.DownloadableProduct">
     <Value>Downloadable product</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.EmailAdminWhenMinStockQuantity">
+    <Value>Email admin when minimum stock quantity</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.FreeShipping">
     <Value>Free shipping</Value>
   </LocaleResource>
@@ -7337,9 +7346,6 @@
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.ModalTitle">
     <Value>Settings</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.NotifyAdminForQuantityBelow">
-    <Value>Notify for qty below</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.Settings.ProductEditor.NotReturnable">
     <Value>Not returnable</Value>

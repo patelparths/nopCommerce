@@ -208,14 +208,14 @@ namespace Nop.Core.Domain.Catalog
         public bool MinimumStockQuantity { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether 'Email admin when minimum stock quantity' field is shown
+        /// </summary>
+        public bool EmailAdminWhenMinStockQuantity { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether 'Low stock activity' field is shown
         /// </summary>
         public bool LowStockActivity { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Notify admin for quantity below' field is shown
-        /// </summary>
-        public bool NotifyAdminForQuantityBelow { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether 'Backorders' field is shown

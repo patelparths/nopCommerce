@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Routing
-@model AddProductAttributeCombinationModel
+﻿@model AddProductAttributeCombinationModel
 
 @{
     Layout = "_AdminPopupLayout";
@@ -104,11 +103,20 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-4">
-                                <nop-label asp-for="NotifyAdminForQuantityBelow"/>
+                                <nop-label asp-for="MinStockQuantity"/>
                             </div>
                             <div class="col-sm-8">
-                                <nop-editor asp-for="NotifyAdminForQuantityBelow"/>
-                                <span asp-validation-for="NotifyAdminForQuantityBelow"></span>
+                                <nop-editor asp-for="MinStockQuantity"/>
+                                <span asp-validation-for="MinStockQuantity"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <nop-label asp-for="EmailAdminWhenMinStockQuantity"/>
+                            </div>
+                            <div class="col-sm-8">
+                                <nop-editor asp-for="EmailAdminWhenMinStockQuantity"/>
+                                <span asp-validation-for="EmailAdminWhenMinStockQuantity"></span>
                             </div>
                         </div>
                         <div class="form-group">

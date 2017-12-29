@@ -557,20 +557,20 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-10">
+                                                <nop-label asp-for="ProductEditorSettingsModel.EmailAdminWhenMinStockQuantity" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <nop-editor asp-for="ProductEditorSettingsModel.EmailAdminWhenMinStockQuantity" />
+                                                <span asp-validation-for="ProductEditorSettingsModel.EmailAdminWhenMinStockQuantity"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-10">
                                                 <nop-label asp-for="ProductEditorSettingsModel.LowStockActivity" />
                                             </div>
                                             <div class="col-md-2">
                                                 <nop-editor asp-for="ProductEditorSettingsModel.LowStockActivity" />
                                                 <span asp-validation-for="ProductEditorSettingsModel.LowStockActivity"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-10">
-                                                <nop-label asp-for="ProductEditorSettingsModel.NotifyAdminForQuantityBelow" />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <nop-editor asp-for="ProductEditorSettingsModel.NotifyAdminForQuantityBelow" />
-                                                <span asp-validation-for="ProductEditorSettingsModel.NotifyAdminForQuantityBelow"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">

@@ -338,14 +338,14 @@ namespace Nop.Core.Domain.Catalog
         public int MinStockQuantity { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether an email notification should be sent to a store owner if stock quantity less than minimum
+        /// </summary>
+        public bool EmailAdminWhenMinStockQuantity { get; set; }
+
+        /// <summary>
         /// Gets or sets the low stock activity identifier
         /// </summary>
         public int LowStockActivityId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the quantity when admin should be notified
-        /// </summary>
-        public int NotifyAdminForQuantityBelow { get; set; }
 
         /// <summary>
         /// Gets or sets a value backorder mode identifier

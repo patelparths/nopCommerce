@@ -50,7 +50,8 @@
                                     ManufacturerPartNumber: { editable: true, type: "string" },
                                     Gtin: { editable: true, type: "string" },
                                     OverriddenPrice: { editable: true, type: "number" },
-                                    NotifyAdminForQuantityBelow: { editable: true, type: "number" },
+                                    MinStockQuantity: { editable: true, type: "number" },
+                                    EmailAdminWhenMinStockQuantity: { editable: true, type: "boolean" },
                                     Id: { editable: false, type: "number" }
                                 }
                             }
@@ -114,6 +115,19 @@
                             title: "@T("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.Gtin")",
                             width: 200
                         }, {
+                            field: "MinStockQuantity",
+                            title: "@T("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.MinStockQuantity")",
+                            width: 150,
+                            //integer format
+                            format: "{0:0}"
+                        }, {
+                            field: "EmailAdminWhenMinStockQuantity",
+                            title: "@T("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.EmailAdminWhenMinStockQuantity")",
+                            width: 150,
+                            headerAttributes: { style: "text-align:center" },
+                            attributes: { style: "text-align:center" },
+                            template: '# if(EmailAdminWhenMinStockQuantity) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                        }, {
                             field: "OverriddenPrice",
                             title: "@T("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.OverriddenPrice")",
                             width: 200,
@@ -125,12 +139,6 @@
                                         decimals: 4
                                     });
                             }
-                        }, {
-                            field: "NotifyAdminForQuantityBelow",
-                            title: "@T("Admin.Catalog.Products.ProductAttributes.AttributeCombinations.Fields.NotifyAdminForQuantityBelow")",
-                            width: 150,
-                            //integer format
-                            format: "{0:0}"
                         }, {
                             command: [
                                 {

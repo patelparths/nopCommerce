@@ -344,7 +344,8 @@ namespace Nop.Services.Catalog
                     ManufacturerPartNumber = combination.ManufacturerPartNumber,
                     Gtin = combination.Gtin,
                     OverriddenPrice = combination.OverriddenPrice,
-                    NotifyAdminForQuantityBelow = combination.NotifyAdminForQuantityBelow
+                    MinStockQuantity = combination.MinStockQuantity,
+                    EmailAdminWhenMinStockQuantity = combination.EmailAdminWhenMinStockQuantity
                 };
                 _productAttributeService.InsertProductAttributeCombination(combinationCopy);
 
@@ -676,8 +677,8 @@ namespace Nop.Services.Catalog
                 DisplayStockAvailability = product.DisplayStockAvailability,
                 DisplayStockQuantity = product.DisplayStockQuantity,
                 MinStockQuantity = product.MinStockQuantity,
+                EmailAdminWhenMinStockQuantity = product.EmailAdminWhenMinStockQuantity,
                 LowStockActivityId = product.LowStockActivityId,
-                NotifyAdminForQuantityBelow = product.NotifyAdminForQuantityBelow,
                 BackorderMode = product.BackorderMode,
                 AllowBackInStockSubscriptions = product.AllowBackInStockSubscriptions,
                 OrderMinimumQuantity = product.OrderMinimumQuantity,
