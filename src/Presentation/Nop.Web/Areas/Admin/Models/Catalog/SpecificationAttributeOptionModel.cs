@@ -41,4 +41,14 @@ namespace Nop.Web.Areas.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name")]
         public string Name { get; set; }
     }
+
+    public partial class SpecificationAttributeProductModel : BaseNopEntityModel
+    {
+        public int SpecificationAttributeId { get; set; }
+
+        public int ProductId { get; set; }
+
+        [NopResourceDisplayName("Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts.Product")]
+        public string ProductName { get; set; }
+    }
 }

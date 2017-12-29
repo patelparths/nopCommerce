@@ -1860,6 +1860,12 @@
   <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.Info">
     <Value>Attribute info</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts">
+    <Value>Mapped products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts.Product">
+    <Value>Product</Value>
+  </LocaleResource>  
   <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.Options">
     <Value>Options</Value>
   </LocaleResource>

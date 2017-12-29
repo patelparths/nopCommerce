@@ -1,0 +1,70 @@
+﻿@model SpecificationAttributeModel
+
+<div class="panel-group">
+    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_mapped_products_top", additionalData = Model })
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="specificationattributemappedproducts-grid"></div>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#specificationattributemappedproducts-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("MappedProducts", "SpecificationAttribute", new {specificationAttributeId = Model.Id}))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors",
+                                model: {
+                                    id: "Id"
+                                }
+                            },
+                            error: function (e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        editable: {
+                            confirmation: "@T("Admin.Common.DeleteConfirmation")",
+                            mode: "inline"
+                        },
+                        pageable: {
+                            refresh: true,
+                            numeric: false,
+                            previousNext: false,
+                            info: false,
+                            @await Html.PartialAsync("_GridPagerMessages")
+                        },
+                        scrollable: false,
+                        columns: [
+                            {
+                                field: "ProductName",
+                                title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts.Product")"
+                            }, {
+                                field: "ProductId",
+                                title: "@T("Admin.Common.View")",
+                                width: 100,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<a class="btn btn-default" href="@Url.Content("~/Admin/Product/Edit/")#=ProductId#"><i class="fa fa-eye"></i>@T("Admin.Common.View")</a>'
+                            }
+                        ]
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_mapped_products_bottom", additionalData = Model })
+</div>

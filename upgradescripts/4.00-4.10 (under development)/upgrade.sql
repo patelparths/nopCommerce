@@ -50,6 +50,12 @@ set @resources='
   <LocaleResource Name="Admin.Promotions.Discounts.List.SearchStartDate.Hint">
     <Value>The start date for the search.</Value>
   </LocaleResource> 
+  <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts">
+    <Value>Mapped products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Attributes.SpecificationAttributes.MappedProducts.Product">
+    <Value>Product</Value>
+  </LocaleResource>    
 </Language>
 '
 
