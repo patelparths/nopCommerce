@@ -1,4 +1,9 @@
 ﻿@model SpecificationAttributeModel
+@inject AdminAreaSettings adminAreaSettings
+@{
+    var defaultGridPageSize = adminAreaSettings.DefaultGridPageSize;
+    var gridPageSizes = adminAreaSettings.GridPageSizes;
+}
 
 <div class="panel-group">
     @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_specification_attribute_details_mapped_products_top", additionalData = Model })
@@ -32,6 +37,7 @@
                                 // Cancel the changes
                                 this.cancelChanges();
                             },
+                            pageSize: @(defaultGridPageSize),
                             serverPaging: true,
                             serverFiltering: true,
                             serverSorting: true
@@ -42,9 +48,7 @@
                         },
                         pageable: {
                             refresh: true,
-                            numeric: false,
-                            previousNext: false,
-                            info: false,
+                            pageSizes: [@(gridPageSizes)],
                             @await Html.PartialAsync("_GridPagerMessages")
                         },
                         scrollable: false,
