@@ -571,7 +571,7 @@ namespace Nop.Services.Catalog
                 {
                     foreach (var attributeValue in attributeValues)
                     {
-                        attributesTotalPrice += GetProductAttributeValuePriceAdjustment(attributeValue);
+                        attributesTotalPrice += GetProductAttributeValuePriceAdjustment(attributeValue, product.CustomerEntersPrice ? (decimal?)customerEnteredPrice : null);
                     }
                 }
 
@@ -738,19 +738,31 @@ namespace Nop.Services.Catalog
         /// Get a price adjustment of a product attribute value
         /// </summary>
         /// <param name="value">Product attribute value</param>
+        /// <param name="productPrice">Product price (null for using the base product price)</param>
         /// <returns>Price adjustment</returns>
-        public virtual decimal GetProductAttributeValuePriceAdjustment(ProductAttributeValue value)
+        public virtual decimal GetProductAttributeValuePriceAdjustment(ProductAttributeValue value, decimal? productPrice = null)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
+           
             var adjustment = decimal.Zero;
             switch (value.AttributeValueType)
             {
                 case AttributeValueType.Simple:
                     {
                         //simple attribute
-                        adjustment = value.PriceAdjustment;
+                        if (value.PriceAdjustmentPercentage)
+                        {
+                            if (!productPrice.HasValue)
+                                productPrice = value.ProductAttributeMapping?.Product.Price ?? 0;
+
+                            adjustment = (decimal) ((float) productPrice * (float) value.PriceAdjustment / 100f);
+                        }
+                        else
+                        {
+                            adjustment = value.PriceAdjustment;
+                        }
                     }
                     break;
                 case AttributeValueType.AssociatedToProduct:

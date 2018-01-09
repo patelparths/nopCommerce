@@ -80,7 +80,7 @@ namespace Nop.Services.Catalog
             var customer = _workContext.CurrentCustomer;
             return FormatAttributes(product, attributesXml, customer);
         }
-        
+
         /// <summary>
         /// Formats attributes
         /// </summary>

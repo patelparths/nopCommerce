@@ -74,6 +74,12 @@ set @resources='
   <LocaleResource Name="Enums.Nop.Core.Domain.Customers.UserRegistrationType.Standard">
     <Value>Standard account creation</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.PriceAdjustmentPercentage">
+    <Value>Price adjustment. Use percentage</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.PriceAdjustmentPercentage.Hint">
+    <Value>Determines whether to use percentage for price adjustment.</Value>
+  </LocaleResource>  
 </Language>
 '
 
@@ -177,4 +183,37 @@ BEGIN
 	ALTER TABLE [ActivityLog]
 	ADD [EntityName] NVARCHAR(400) NULL
 END
+GO
+
+
+--new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[ProductAttributeValue]') and NAME='PriceAdjustmentPercentage')
+BEGIN
+	ALTER TABLE [ProductAttributeValue]
+	ADD [PriceAdjustmentPercentage] bit NULL
+END
+GO
+
+UPDATE [ProductAttributeValue]
+SET [PriceAdjustmentPercentage] = 0
+WHERE [PriceAdjustmentPercentage] IS NULL
+GO
+
+ALTER TABLE [ProductAttributeValue] ALTER COLUMN [PriceAdjustmentPercentage] bit NOT NULL
+GO
+
+--new column
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id=object_id('[PredefinedProductAttributeValue]') and NAME='PriceAdjustmentPercentage')
+BEGIN
+	ALTER TABLE PredefinedProductAttributeValue
+	ADD [PriceAdjustmentPercentage] bit NULL
+END
+GO
+
+UPDATE [PredefinedProductAttributeValue]
+SET [PriceAdjustmentPercentage] = 0
+WHERE [PriceAdjustmentPercentage] IS NULL
+GO
+
+ALTER TABLE [PredefinedProductAttributeValue] ALTER COLUMN [PriceAdjustmentPercentage] bit NOT NULL
 GO

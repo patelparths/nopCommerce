@@ -23,6 +23,11 @@ namespace Nop.Core.Domain.Catalog
         public decimal PriceAdjustment { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to "price adjustment" is specified as percentage
+        /// </summary>
+        public bool PriceAdjustmentPercentage { get; set; }
+
+        /// <summary>
         /// Gets or sets the weight adjustment
         /// </summary>
         public decimal WeightAdjustment { get; set; }
