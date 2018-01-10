@@ -80,6 +80,12 @@ set @resources='
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.PriceAdjustmentPercentage.Hint">
     <Value>Determines whether to use percentage for price adjustment.</Value>
   </LocaleResource>  
+  <LocaleResource Name="Admin.Catalog.Attributes.ProductAttributes.PredefinedValues.Fields.PriceAdjustmentPercentage">
+    <Value>Price adjustment. Use percentage</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Attributes.ProductAttributes.PredefinedValues.Fields.PriceAdjustmentPercentage.Hint">
+    <Value>Determines whether to use percentage for price adjustment.</Value>
+  </LocaleResource>  
 </Language>
 '
 

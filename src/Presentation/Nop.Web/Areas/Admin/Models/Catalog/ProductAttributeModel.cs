@@ -66,7 +66,7 @@ namespace Nop.Web.Areas.Admin.Models.Catalog
         //used only on the values list page
         public string PriceAdjustmentStr { get; set; }
 
-        [NopResourceDisplayName("Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.PriceAdjustmentPercentage")]
+        [NopResourceDisplayName("Admin.Catalog.Attributes.ProductAttributes.PredefinedValues.Fields.PriceAdjustmentPercentage")]
         public bool PriceAdjustmentPercentage { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Attributes.ProductAttributes.PredefinedValues.Fields.WeightAdjustment")]
