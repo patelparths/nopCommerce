@@ -31,5 +31,7 @@ namespace Nop.Web.Areas.Admin.Models.Discounts
         [NopResourceDisplayName("Admin.Promotions.Discounts.List.SearchEndDate")]
         [UIHint("DateNullable")]
         public DateTime? SearchEndDate { get; set; }
+
+        public bool IsDiscountApprover { get; set; }
     }
 }

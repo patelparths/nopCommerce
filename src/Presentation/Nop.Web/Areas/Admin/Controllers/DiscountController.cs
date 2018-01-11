@@ -27,6 +27,7 @@ using Nop.Web.Framework.Extensions;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Filters;
+using Nop.Core.Domain.Customers;
 
 namespace Nop.Web.Areas.Admin.Controllers
 {
@@ -99,7 +100,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         #endregion
 
         #region Utilities
-        
+
         protected virtual string GetRequirementUrlInternal(IDiscountRequirementRule discountRequirementRule, Discount discount, int? discountRequirementId)
         {
             if (discountRequirementRule == null)
@@ -111,7 +112,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             var url = $"{_webHelper.GetStoreLocation()}{discountRequirementRule.GetConfigurationUrl(discount.Id, discountRequirementId)}";
             return url;
         }
-        
+
         protected virtual void PrepareDiscountModel(DiscountModel model, Discount discount)
         {
             if (model == null)
@@ -132,10 +133,12 @@ namespace Nop.Web.Areas.Admin.Controllers
 
             //get available requirement groups
             var requirementGroups = discount.DiscountRequirements.Where(requirement => requirement.IsGroup);
-            model.AvailableRequirementGroups = requirementGroups.Select(requirement => 
+            model.AvailableRequirementGroups = requirementGroups.Select(requirement =>
                 new SelectListItem { Value = requirement.Id.ToString(), Text = requirement.DiscountRequirementRuleSystemName }).ToList();
+
+            model.IsDiscountApprover = _workContext.CurrentCustomer.IsDiscountApprover();
         }
-        
+
         protected IList<DiscountModel.DiscountRequirementMetaInfo> GetReqirements(IEnumerable<DiscountRequirement> requirements,
             RequirementGroupInteractionType groupInteractionType, Discount discount)
         {
@@ -176,7 +179,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 return requirementModel;
             }).ToList();
         }
-        
+
         protected void DeleteRequirement(ICollection<DiscountRequirement> requirements)
         {
             //recursively delete child requirements
@@ -215,6 +218,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             if (_catalogSettings.IgnoreDiscounts)
                 WarningNotification(_localizationService.GetResource("Admin.Promotions.Discounts.IgnoreDiscounts.Warning"));
 
+            model.IsDiscountApprover = _workContext.CurrentCustomer.IsDiscountApprover();
             return View(model);
         }
 
@@ -230,7 +234,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             var endDateUtc = model.SearchEndDate.HasValue ?
                 (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.SearchEndDate.Value, _dateTimeHelper.CurrentTimeZone).AddDays(1) : null;
 
-            var discounts = _discountService.GetAllDiscounts(discountType, model.SearchDiscountCouponCode, 
+            var discounts = _discountService.GetAllDiscounts(discountType, model.SearchDiscountCouponCode,
                 model.SearchDiscountName, true, startDateUtc, endDateUtc);
 
             var gridModel = new DataSourceResult
@@ -313,6 +317,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        [FormValueRequired("save", "save-continue")]
         public virtual IActionResult Edit(DiscountModel model, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
@@ -349,7 +354,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 {
                     //applied to products
                     var products = _discountService.GetProductsWithAppliedDiscount(discount.Id, true);
-
                     discount.AppliedToProducts.Clear();
                     _discountService.UpdateDiscount(discount);
                     //update "HasDiscountsApplied" property
@@ -407,6 +411,33 @@ namespace Nop.Web.Areas.Admin.Controllers
             return RedirectToAction("List");
         }
 
+        [HttpPost, ActionName("Edit")]
+        [FormValueRequired("approve-discount")]
+        public virtual IActionResult ApproveDiscount(int id)
+        {
+            if (!_workContext.CurrentCustomer.IsDiscountApprover())
+                return RedirectToAction("Edit", new { id = id });
+
+            var discount = _discountService.GetDiscountById(id);
+            if (discount == null)
+                return RedirectToAction("Edit", new { id = id });
+
+            if (!discount.IsApproved)
+            {
+                discount.IsApproved = true;
+                _discountService.UpdateDiscount(discount);
+                SuccessNotification(_localizationService.GetResource("Discount.Approved.Success"));
+            }
+            else
+            {
+                discount.IsApproved = false;
+                _discountService.UpdateDiscount(discount);
+                SuccessNotification(_localizationService.GetResource("Discount.UnApproved.Success"));
+            }
+
+            return RedirectToAction("Edit", new { id = id });
+        }
+
         #endregion
 
         #region Discount requirements
@@ -431,7 +462,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             return Json(new { url = url });
         }
 
-        public virtual IActionResult GetDiscountRequirements(int discountId, int discountRequirementId, 
+        public virtual IActionResult GetDiscountRequirements(int discountId, int discountRequirementId,
             int? parentId, int? interactionTypeId, bool deleteRequirement)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
@@ -458,7 +489,7 @@ namespace Nop.Web.Areas.Admin.Controllers
                 //or update the requirement
                 else
                 {
-                    var defaultGroupId = discount.DiscountRequirements.FirstOrDefault(requirement => 
+                    var defaultGroupId = discount.DiscountRequirements.FirstOrDefault(requirement =>
                         !requirement.ParentId.HasValue && requirement.IsGroup)?.Id ?? 0;
                     if (defaultGroupId == 0)
                     {
@@ -565,7 +596,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 throw new Exception("No discount found with the specified id");
 
             var products = _discountService.GetProductsWithAppliedDiscount(discount.Id, false, command.Page - 1, command.PageSize);
-
             var gridModel = new DataSourceResult
             {
                 Data = products.Select(product => new DiscountModel.AppliedToProductModel
@@ -708,7 +738,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 throw new Exception("No discount found with the specified id");
 
             var categories = _discountService.GetCategoriesWithAppliedDiscount(discount.Id, false, command.Page - 1, command.PageSize);
-
             var gridModel = new DataSourceResult
             {
                 Data = categories.Select(category => new DiscountModel.AppliedToCategoryModel
@@ -820,7 +849,6 @@ namespace Nop.Web.Areas.Admin.Controllers
                 throw new Exception("No discount found with the specified id");
 
             var manufacturers = _discountService.GetManufacturersWithAppliedDiscount(discount.Id, false, command.Page - 1, command.PageSize);
-
             var gridModel = new DataSourceResult
             {
                 Data = manufacturers.Select(manufacturer => new DiscountModel.AppliedToManufacturerModel

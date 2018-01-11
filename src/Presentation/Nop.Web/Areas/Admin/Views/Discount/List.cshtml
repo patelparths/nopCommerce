@@ -140,6 +140,12 @@
                                     title: "@T("Admin.Promotions.Discounts.Fields.Discount")",
                                     width: 200,
                                     template: '# if(UsePercentage) {# #=DiscountPercentage# % #} else {#  #=DiscountAmount# #=PrimaryStoreCurrencyCode# #} #'
+                                },{
+                                    field: "IsApproved",
+                                    title: "@T("Admin.Promotions.Discounts.Fields.IsApproved")",
+                                    width: 200,
+                                    template: '# if(IsApproved) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #',
+                                    hidden: '@Model.IsDiscountApprover' != 'True' ? true : false
                                 }, {
                                     field: "StartDateUtc",
                                     title: "@T("Admin.Promotions.Discounts.Fields.StartDate")",
@@ -175,7 +181,7 @@
                                 grid.dataSource.page(1); //new search. Set page size to 1
                                 //grid.dataSource.read(); we already loaded the grid above using "page" function
                                 return false;
-                            });
+                            });                          
                         });
 
                         $("".concat("#@Html.IdFor(model => model.SearchDiscountName),",

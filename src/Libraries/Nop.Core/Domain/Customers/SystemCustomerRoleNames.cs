@@ -29,5 +29,10 @@ namespace Nop.Core.Domain.Customers
         /// Vendors
         /// </summary>
         public static string Vendors { get { return "Vendors"; } }
+
+        /// <summary>
+        /// Discount Approver
+        /// </summary>
+        public static string DiscountApprover { get { return "DiscountApprover"; } }
     }
 }

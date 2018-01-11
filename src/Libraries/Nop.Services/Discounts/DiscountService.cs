@@ -618,6 +618,10 @@ namespace Nop.Services.Discounts
             //invalid by default
             var result = new DiscountValidationResult();
 
+            //is approved or not?
+            if (!discount.IsApproved)
+                return result;
+
             //check coupon code
             if (discount.RequiresCouponCode)
             {

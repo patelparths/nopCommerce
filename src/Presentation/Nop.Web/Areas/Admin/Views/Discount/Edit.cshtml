@@ -1,12 +1,10 @@
 ﻿@model DiscountModel
-
 @{
     //page title
     ViewBag.Title = T("Admin.Promotions.Discounts.EditDiscountDetails").Text;
     //active menu item (system name)
     Html.SetActiveMenuItemSystemName("Discounts");
 }
-
 <form asp-controller="Discount" asp-action="Edit" method="post" id="discount-form">
     <div class="content-header clearfix">
         <h1 class="pull-left">
@@ -17,18 +15,37 @@
             </small>
         </h1>
         <div class="pull-right">
-            <button type="submit" name="save" class="btn bg-blue">
-                <i class="fa fa-floppy-o"></i>
-                @T("Admin.Common.Save")
-            </button>
-            <button type="submit" name="save-continue" class="btn bg-blue">
-                <i class="fa fa-floppy-o"></i>
-                @T("Admin.Common.SaveContinue")
-            </button>
+            @if (Model.IsDiscountApprover || !Model.IsApproved)
+            {
+                <button type="submit" name="save" class="btn bg-blue">
+                    <i class="fa fa-floppy-o"></i>
+                    @T("Admin.Common.Save")
+                </button>
+                <button type="submit" name="save-continue" class="btn bg-blue">
+                    <i class="fa fa-floppy-o"></i>
+                    @T("Admin.Common.SaveContinue")
+                </button>
+            }
             <span id="discount-delete" class="btn bg-red">
                 <i class="fa fa-trash-o"></i>
                 @T("Admin.Common.Delete")
             </span>
+            @if (Model.IsDiscountApprover && !Model.IsApproved)
+            {
+                <button type="button" name="approve-discount" id="approve-discount" class="btn bg-blue">
+                    <i class="fa fa-check"></i>
+                    @T("Admin.Common.Approve")
+                </button>
+                <nop-action-confirmation asp-button-id="approve-discount" asp-action="ApproveDiscount" />
+            }
+            else if (Model.IsDiscountApprover)
+            {
+                <button type="button" name="approve-discount" id="approve-discount" class="btn bg-blue">
+                    <i class="fa fa-check"></i>
+                    @T("Admin.Common.UnApprove")
+                </button>
+                <nop-action-confirmation asp-button-id="approve-discount" asp-action="ApproveDiscount" />
+            }
         </div>
         @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_discount_details_buttons", additionalData = Model })
     </div>

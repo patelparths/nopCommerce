@@ -90,6 +90,15 @@ namespace Nop.Core.Domain.Discounts
         /// Used with "Assigned to categories" type only.
         /// </summary>
         public bool AppliedToSubCategories { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether this discount is approved.
+        /// If discount is approved then only it can apply else it can not apply
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is approved; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsApproved { get; set; }
 
         /// <summary>
         /// Gets or sets the discount type

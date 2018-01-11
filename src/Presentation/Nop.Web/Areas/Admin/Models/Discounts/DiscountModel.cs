@@ -71,7 +71,7 @@ namespace Nop.Web.Areas.Admin.Models.Discounts
         [NopResourceDisplayName("Admin.Promotions.Discounts.Fields.MaximumDiscountedQuantity")]
         [UIHint("Int32Nullable")]
         public int? MaximumDiscountedQuantity { get; set; }
-        
+
         [NopResourceDisplayName("Admin.Promotions.Discounts.Fields.AppliedToSubCategories")]
         public bool AppliedToSubCategories { get; set; }
 
@@ -85,6 +85,11 @@ namespace Nop.Web.Areas.Admin.Models.Discounts
 
         [NopResourceDisplayName("Admin.Promotions.Discounts.Requirements.RequirementGroup")]
         public int RequirementGroupId { get; set; }
+
+        [NopResourceDisplayName("Admin.Promotions.Discounts.Requirements.IsApproved")]
+        public bool IsApproved { get; set; }
+
+        public bool IsDiscountApprover { get; set; }
 
         public IList<SelectListItem> AvailableRequirementGroups { get; set; }
 

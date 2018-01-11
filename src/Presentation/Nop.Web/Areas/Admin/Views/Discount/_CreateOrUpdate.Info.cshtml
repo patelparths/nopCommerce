@@ -74,6 +74,7 @@
         }
     }
 </script>
+<input asp-for="IsApproved" type="hidden" />
 <div class="panel-group">
     @await Component.InvokeAsync("AdminWidget", new { widgetZone = "admin_discount_details_info_top", additionalData = Model })
     <div class="panel panel-default">

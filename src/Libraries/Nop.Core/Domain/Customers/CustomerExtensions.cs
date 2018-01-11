@@ -123,6 +123,19 @@ namespace Nop.Core.Domain.Customers
         }
 
         /// <summary>
+        /// Gets a value indicating whether customer is discount approver.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <param name="onlyActiveCustomerRoles">if set to <c>true</c> [only active customer roles].</param>
+        /// <returns>
+        ///   <c>true</c> if [is discount approver] [the specified only active customer roles]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsDiscountApprover(this Customer customer, bool onlyActiveCustomerRoles = true)
+        {
+            return IsInCustomerRole(customer, SystemCustomerRoleNames.DiscountApprover, onlyActiveCustomerRoles);
+        }
+
+        /// <summary>
         /// Gets a default tax display type (if configured)
         /// </summary>
         /// <param name="customer">Customer</param>
