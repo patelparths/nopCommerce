@@ -40,8 +40,8 @@
             }
             else if (Model.IsDiscountApprover)
             {
-                <button type="button" name="approve-discount" id="approve-discount" class="btn bg-blue">
-                    <i class="fa fa-check"></i>
+                <button type="button" name="approve-discount" id="approve-discount" class="btn bg-red">
+                    <i class="fa fa-ban"></i>
                     @T("Admin.Common.UnApprove")
                 </button>
                 <nop-action-confirmation asp-button-id="approve-discount" asp-action="ApproveDiscount" />
