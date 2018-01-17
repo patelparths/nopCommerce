@@ -192,6 +192,12 @@ namespace Nop.Web.Areas.Admin.Models.Customers
 
         public string AvatarUrl { get; internal set; }
 
+        [NopResourceDisplayName("Admin.Customers.Customers.Organization")]
+        public string Organization { get; set; }
+
+        [NopResourceDisplayName("Admin.Customers.Customers.Affiliations")]
+        public IList<string> Affiliations { get; set; }
+
         #region Nested classes
 
         public partial class StoreModel : BaseNopEntityModel

@@ -182,5 +182,15 @@ namespace Nop.Core.Domain.Customers
         /// EuCookieLawAccepted
         /// </summary>
         public static string EuCookieLawAccepted { get { return "EuCookieLaw.Accepted"; } }
+
+        // Organization and Affiliations
+        /// <summary>
+        /// Affiliations.
+        /// </summary>        
+        public static string Affiliations { get { return "Affiliations"; } }
+        /// <summary>
+        /// Organizations.
+        /// </summary>        
+        public static string Organizations { get { return "Organizations"; } }
     }
 }

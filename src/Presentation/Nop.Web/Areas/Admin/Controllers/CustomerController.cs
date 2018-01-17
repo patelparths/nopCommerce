@@ -598,6 +598,10 @@ namespace Nop.Web.Areas.Admin.Controllers
             model.PhoneEnabled = _customerSettings.PhoneEnabled;
             model.FaxEnabled = _customerSettings.FaxEnabled;
 
+            // Organization and Affiliations
+            model.Organization = customer.GetAttribute<string>(SystemCustomerAttributeNames.Organizations);
+            model.Affiliations = customer.GetAttribute<List<string>>(SystemCustomerAttributeNames.Affiliations);
+
             //countries and states
             if (_customerSettings.CountryEnabled)
             {
