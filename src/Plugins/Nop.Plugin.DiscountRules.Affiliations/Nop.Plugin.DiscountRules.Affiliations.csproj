@@ -46,6 +46,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Glob" Version="0.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
   </ItemGroup>
   

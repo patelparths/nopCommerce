@@ -9,6 +9,7 @@ using Nop.Services.Discounts;
 using Nop.Services.Localization;
 using Nop.Services.Common;
 using Nop.Core.Domain.Customers;
+using System.Collections.Generic;
 
 namespace Nop.Plugin.DiscountRules.Affiliations
 {
@@ -61,9 +62,13 @@ namespace Nop.Plugin.DiscountRules.Affiliations
             if (string.IsNullOrEmpty(restrictedAffiliation))
                 return result;
 
-            //result is valid if the customer belongs to the restricted organization
-            result.IsValid = request.Customer.GetAttribute<string>(SystemCustomerAttributeNames.Affiliations).Contains(restrictedAffiliation);
+            //result is valid if the customer belongs to the restricted affiliations
+            var customerAffiliations = request.Customer.GetAttribute<List<string>>(SystemCustomerAttributeNames.Affiliations);
+            if (!customerAffiliations.Any())
+                return result;
 
+            result.IsValid = customerAffiliations.Any(x => Glob.Glob.IsMatch(x, restrictedAffiliation));
+            
             return result;
         }
 

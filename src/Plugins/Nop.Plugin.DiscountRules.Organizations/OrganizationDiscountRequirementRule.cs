@@ -62,7 +62,11 @@ namespace Nop.Plugin.DiscountRules.Organizations
                 return result;
 
             //result is valid if the customer belongs to the restricted organization
-            result.IsValid = request.Customer.GetAttribute<string>(SystemCustomerAttributeNames.Organizations).Contains(restrictedOrganization);
+            var customerOrganization = request.Customer.GetAttribute<string>(SystemCustomerAttributeNames.Organizations);
+            if (string.IsNullOrEmpty(customerOrganization))
+                return result;
+
+            result.IsValid =  Glob.Glob.IsMatch(customerOrganization, restrictedOrganization);
 
             return result;
         }
