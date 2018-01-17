@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Discount requirements",
+  "FriendlyName": "Must be assigned to affiliation",
+  "SystemName": "DiscountRequirement.MustBeAssignedToAffiliation",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.10" ],
+  "Author": "Parth S. Patel",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.DiscountRules.Affiliations.dll",
+  "Description": "This plugin allows you to configure discounts for certain affiliation"
+}
